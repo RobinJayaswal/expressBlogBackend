@@ -33,26 +33,22 @@ export const signup = (req, res, next) => { // eslint-disable-line consistent-re
   // this is similar to how you created a Post
   // and then return a token same as you did in in signin
 
-  let userExists = false;
   User.findOne({ email })
     .then((post) => {
       if (post) {
         console.log('user exists!');
         userExists = true;
+        return res.status(422).send('User with email already exists');
       }
-    });
-
-  if (userExists) {
-    console.log('Sending 422');
-    return res.status(422).send('User with email already exists');
-  }
-
-  const user = new User();
-  user.email = email;
-  user.password = password;
-  user.username = username;
-  user.save()
-    .then(() => {
-      res.send({ token: tokenForUser(user) });
+      else {
+        const user = new User();
+        user.email = email;
+        user.password = password;
+        user.username = username;
+        user.save()
+          .then(() => {
+            res.send({ token: tokenForUser(user) });
+          });
+      }
     });
 };
