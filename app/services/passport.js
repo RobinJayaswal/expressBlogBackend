@@ -7,7 +7,6 @@ dotenv.config({ silent: true });
 
 // and import User and your config with the secret
 import User from '../models/user_model';
-// import config from '../config';
 
 // options for local strategy, we'll use email AS the username
 // not have separate ones
