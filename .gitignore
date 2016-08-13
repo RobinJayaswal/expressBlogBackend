@@ -2,3 +2,5 @@ node_modules
 config.js
 npm-debug.log
 dist
+secret.env
+.env

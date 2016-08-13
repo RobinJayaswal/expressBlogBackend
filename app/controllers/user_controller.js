@@ -3,9 +3,7 @@ import jwt from 'jwt-simple';
 // import config from '../config.js';
 import dotenv from 'dotenv';
 
-
 dotenv.config({ silent: true });
-
 
 // encodes a new token for a user object
 function tokenForUser(user) {
