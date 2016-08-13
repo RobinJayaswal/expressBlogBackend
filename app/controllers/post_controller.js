@@ -3,12 +3,12 @@ import sortByCreatedAt from '../includes/quicksort_posts.js';
 
 const cleanPosts = (posts) => {
   return posts.map(post => {
-    return { id: post._id, title: post.title, tags: post.tags, content: post.content };
+    return { id: post._id, title: post.title, tags: post.tags, content: post.content, author: post.author };
   });
 };
 
 const cleanPost = (post) => {
-  return { id: post._id, title: post.title, tags: post.tags, content: post.content };
+  return { id: post._id, title: post.title, tags: post.tags, content: post.content, author: post.author };
 };
 
 export const createPost = (req, res) => {
@@ -16,6 +16,7 @@ export const createPost = (req, res) => {
   post.title = req.body.title;
   post.tags = req.body.tags;
   post.content = req.body.content;
+  post.author = req.user._id;
   post.save()
     .then(result => {
       res.json({ message: 'Post Created!' });
@@ -36,7 +37,9 @@ export const getPosts = (req, res) => {
 
 export const getPost = (req, res) => {
   Post.findById(req.params.id)
+    .populate('author')
     .then(post => {
+      console.log(post.author);
       res.json(cleanPost(post));
     });
 };
